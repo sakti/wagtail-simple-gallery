@@ -131,7 +131,7 @@ def get_gallery_images(collection, page=None, tags=None):
     # Tags must be a list of tag names like ["Hasthag", "Kawabonga", "Winter is coming"]
     images = None
     try:
-        images = get_image_model().objects.filter(collection__name=collection).prefetch_related("tags")
+        images = get_image_model().objects.filter(collection__name=collection).prefetch_related("tags").prefetch_related("renditions")
         if page:
             if page.order_images_by == 1:
                 images = images.order_by('title')
@@ -140,5 +140,5 @@ def get_gallery_images(collection, page=None, tags=None):
     except Exception as e:
         pass
     if images and tags:
-        images = images.filter(tags__name__in=tags).prefetch_related("tags").distinct()
+        images = images.filter(tags__name__in=tags).prefetch_related("tags").prefetch_related("renditions").distinct()
     return images
