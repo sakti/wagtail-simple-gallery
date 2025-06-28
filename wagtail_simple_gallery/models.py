@@ -93,7 +93,7 @@ class SimpleGalleryIndex(RoutablePageMixin, Page):
         return tags
 
     @route('^tags/$', name='tag_archive')
-    @route('^tags/([\w-]+)/$', name='tag_archive')
+    @route(r'^tags/([\w-]+)/$', name='tag_archive')
     def tag_archive(self, request, tag=None):
         try:
             tag = Tag.objects.get(slug=tag)
